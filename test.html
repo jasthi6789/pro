@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>
+Test
+</title>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+
+</head>
+<body  ng-app="selectboxApp" ng-controller="selectboxCtrl"
+<div>
+<h3>Retail Store:</h3>
+
+<select name="users" ng-model="userSelect" ng-change="change()">
+<option value="" >--Select Product--</option>
+<option ng-repeat="option in items" value="{{option.itemid}}">{{option.name}}</option>
+</select><br /><br />
+<select name="users" ng-model="OptionSelect" ng-change="myFunc()">
+<option value="">--Select User--</option>
+<option ng-repeat="option in type" value="{{option.typeid}}">{{option.name}}</option>
+</select><br /><br />
+<select name="users" ng-model="customer" ng-show="myVar">
+<option value="">--Select Customer Time Peroid--</option>
+<option ng-repeat="option in custom" value="{{option.cusid}}">{{option.name}}</option>
+</select><br /><br />
+Price:<input type="number" ng-model="price" /><br><br>
+</div>
+<input type="button" value="Submit" ng-click="checkselection()" /><br /><br />
+<span style="color:red">{{msg}}</span><br />
+
+<p style="color:red"> {{pr}}</p>
+<p style="color:red"> {{discount}}</p>
+<script>
+var app = angular.module('selectboxApp', []);
+app.controller('selectboxCtrl', function ($scope) {
+$scope.items = [{
+"itemid": 1,
+"name": "Groceries"
+}, {
+"itemid": 2,
+"name": "Non-Groceries"
+}];
+$scope.type = [{
+"typeid": 1,
+"name": "Employee"
+}, {
+"typeid": 2,
+"name": "Customer"
+},
+ {
+"typeid": 3,
+"name": "Affiliate "
+}
+];
+$scope.custom = [{
+"cusid": 1,
+"name": "Less than 2 years"
+}, {
+"cusid": 2,
+"name": "More than 2 years"
+}
+];
+$scope.myFunc= function (){
+if($scope.userSelect==2&&$scope.OptionSelect==2){
+$scope.myVar=true;
+}
+else{
+$scope.myVar=false;
+}
+}
+
+$scope.checkselection = function () {
+console.log($scope.userSelect);
+if ($scope.userSelect != "" && $scope.userSelect != undefined 
+&& $scope.OptionSelect != "" && $scope.OptionSelect != undefined
+&& $scope.price != "" && $scope.price != undefined
+&& $scope.customer != "" && $scope.customer != undefined){
+$scope.msg = "Details are submited"
+
+}
+if($scope.userSelect==1 ){
+$scope.pr = "Price is"+' '+$scope.price
+}
+if($scope.userSelect==2&&$scope.OptionSelect==1 ){
+$scope.discount = "Employee discount is 30%";
+$scope.emp = (($scope.price*70)/100).toFixed(2);
+console.log($scope.emp);
+$scope.pr = "Price is"+' '+$scope.emp;
+}
+if($scope.userSelect==2&&$scope.OptionSelect==3 ){
+$scope.discount = "Affiliate  discount is 10%";
+$scope.aff = (($scope.price*90)/100).toFixed(2);
+console.log($scope.aff);
+$scope.pr = "Price is"+' '+$scope.aff;
+}
+
+if($scope.userSelect==2&&$scope.OptionSelect==2&&$scope.customer==2 ){
+$scope.discount = "Customer  discount is 5% if he had 2yrs";
+$scope.cus = (($scope.price*95)/100).toFixed(2);
+console.log($scope.cus);
+$scope.pr = "Price is"+' '+$scope.cus;
+}
+if($scope.userSelect==2&&$scope.OptionSelect==2&&$scope.customer==1 ){
+$scope.discount = "Customer had no discount";
+
+$scope.pr = "Price is"+' '+$scope.price;
+
+}
+else{
+$scope.msg = "Enter correct details"
+}
+}
+});
+</script
+</body>
+</html>
